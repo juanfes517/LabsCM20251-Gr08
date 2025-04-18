@@ -21,7 +21,9 @@ fun NavigationWrapper() {
         }
 
         composable<Reset> {
-            ResetScreen{ navController.navigate(PersonalData) }
+            ResetScreen{ navController.navigate(PersonalData) {
+                popUpTo<PersonalData>{ inclusive = true }
+            } }
         }
     }
 }
