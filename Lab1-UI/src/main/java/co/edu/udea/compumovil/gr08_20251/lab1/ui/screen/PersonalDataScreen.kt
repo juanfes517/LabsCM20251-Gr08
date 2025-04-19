@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr08_20251.lab1.ui
+package co.edu.udea.compumovil.gr08_20251.lab1.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,8 +11,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.Header
 
 @Composable
 fun PersonalDataScreen(navigateToContactData: () -> Unit) {
@@ -21,14 +20,10 @@ fun PersonalDataScreen(navigateToContactData: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Form(navigateToContactData: () -> Unit) {
-    TopAppBar(
-        title = { Text("Personal Data") }
-    )
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.weight(1f))
+        Header("Información personal")
         Spacer(modifier = Modifier.weight(1f))
         Button(onClick = { navigateToContactData() }) {
             Text(text = "Next")

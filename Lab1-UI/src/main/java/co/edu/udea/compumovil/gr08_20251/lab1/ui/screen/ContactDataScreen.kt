@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr08_20251.lab1.ui
+package co.edu.udea.compumovil.gr08_20251.lab1.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.Header
 
 @Composable
 fun ContactDataScreen(navigateToResetData: () -> Unit) {
     Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.weight(1f))
-        Text(text = "Contact Data", fontSize = 25.sp)
+        Header("Información de contacto")
         Spacer(modifier = Modifier.weight(1f))
         Button(onClick = { navigateToResetData() }) {
             Text(text = "Next")

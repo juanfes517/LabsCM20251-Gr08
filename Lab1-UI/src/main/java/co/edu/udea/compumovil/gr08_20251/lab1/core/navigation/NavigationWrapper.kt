@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import co.edu.udea.compumovil.gr08_20251.lab1.ui.ContactDataScreen
-import co.edu.udea.compumovil.gr08_20251.lab1.ui.PersonalDataScreen
-import co.edu.udea.compumovil.gr08_20251.lab1.ui.ResetScreen
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.screen.ContactDataScreen
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.screen.PersonalDataScreen
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.screen.ResetScreen
 
 @Composable
 fun NavigationWrapper() {

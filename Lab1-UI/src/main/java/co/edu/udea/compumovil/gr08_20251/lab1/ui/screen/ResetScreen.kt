@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr08_20251.lab1.ui
+package co.edu.udea.compumovil.gr08_20251.lab1.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
