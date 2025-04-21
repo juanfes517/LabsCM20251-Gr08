@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,49 +36,59 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import co.edu.udea.compumovil.gr08_20251.lab1.R
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.CustomIcon
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.Header
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookBold
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookRegular
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.viewModel.PersonalDataViewModel
 
 @Composable
-fun PersonalDataScreen(navigateToContactData: () -> Unit) {
+fun PersonalDataScreen(
+    navigateToContactData: () -> Unit,
+) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier
-                //.background(Color.Blue)
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
         ) {
             Header("Información personal")
             Form(navigateToContactData)
-
         }
     }
 }
 
 @Composable
-fun Form(navigateToContactData: () -> Unit) {
-    var text by remember { mutableStateOf("") }
+fun Form(
+    navigateToContactData: () -> Unit,
+    personalDataViewModel: PersonalDataViewModel = viewModel()
+) {
+    val personalDataUiState by personalDataViewModel.uiState.collectAsState()
 
     CustomTextField(
-        userInput = text,
-        onUserInputChanged = {},
+        userInput = personalDataViewModel.userInputName,
+        onUserInputChanged = { personalDataViewModel.updateUserInputName(it) },
         iconId = R.drawable.person,
         labelText = "Nombre",
         keyboardCapitalization = KeyboardCapitalization.Sentences,
-        keyboardType = KeyboardType.Text
+        keyboardType = KeyboardType.Text,
+        isInputNull = personalDataUiState.isInputNameNull
     )
 
     CustomTextField(
-        userInput = text,
-        onUserInputChanged = {  },
+        userInput = personalDataViewModel.userInputLastName,
+        onUserInputChanged = { personalDataViewModel.updateUserInputLastName(it) },
         iconId = R.drawable.person_add,
         labelText = "Apellidos",
         keyboardCapitalization = KeyboardCapitalization.Sentences,
-        keyboardType = KeyboardType.Text
+        keyboardType = KeyboardType.Text,
+        isInputNull = personalDataUiState.isInputLastNameNull
     )
+
+    Button(onClick = { personalDataViewModel.checkUserInputs(navigateToContactData) }) {
+        Text(text = "Next")
+    }
 }
 
 @Composable
@@ -86,10 +98,11 @@ fun CustomTextField(
     iconId: Int,
     labelText: String,
     keyboardCapitalization: KeyboardCapitalization,
-    keyboardType: KeyboardType
+    keyboardType: KeyboardType,
+    isInputNull: Boolean
 ) {
 
-    Row (
+    Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(start = 10.dp, bottom = 5.dp)
     ) {
@@ -103,7 +116,8 @@ fun CustomTextField(
         ) {
             TextField(
                 value = userInput,
-                onValueChange = onUserInputChanged ,
+                onValueChange = onUserInputChanged,
+                isError = isInputNull,
                 label = {
                     Text(
                         text = labelText,
