@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -36,11 +37,11 @@ fun Header(title: String) {
 
 // example of icon id: R.drawable.person
 @Composable
-fun CustomIcon(iconId: Int, iconSize: Dp) {
+fun CustomIcon(modifier: Modifier = Modifier, iconId: Int, iconSize: Dp) {
     Image(
         painter = painterResource(iconId),
         contentDescription = null,
-        modifier = Modifier.size(iconSize),
+        modifier = modifier.size(iconSize),
         contentScale = ContentScale.Fit,
         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
     )
