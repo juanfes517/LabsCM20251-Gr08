@@ -103,7 +103,6 @@ fun CustomTextField(
         ) {
             TextField(
                 value = userInput,
-                isError = true,
                 onValueChange = onUserInputChanged ,
                 label = {
                     Text(
