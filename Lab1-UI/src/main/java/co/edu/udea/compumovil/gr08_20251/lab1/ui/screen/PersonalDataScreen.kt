@@ -73,7 +73,8 @@ fun Form(
         labelText = "Nombre",
         keyboardCapitalization = KeyboardCapitalization.Sentences,
         keyboardType = KeyboardType.Text,
-        isInputNull = personalDataUiState.isInputNameNull
+        isInputNull = personalDataUiState.isInputNameNull,
+        maxComponentWidth = 0.8f
     )
 
     CustomTextField(
@@ -83,7 +84,8 @@ fun Form(
         labelText = "Apellidos",
         keyboardCapitalization = KeyboardCapitalization.Sentences,
         keyboardType = KeyboardType.Text,
-        isInputNull = personalDataUiState.isInputLastNameNull
+        isInputNull = personalDataUiState.isInputLastNameNull,
+        maxComponentWidth = 0.7f
     )
 
     Button(onClick = { personalDataViewModel.checkUserInputs(navigateToContactData) }) {
@@ -99,12 +101,15 @@ fun CustomTextField(
     labelText: String,
     keyboardCapitalization: KeyboardCapitalization,
     keyboardType: KeyboardType,
-    isInputNull: Boolean
+    isInputNull: Boolean,
+    maxComponentWidth: Float
 ) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(start = 10.dp, bottom = 5.dp)
+        modifier = Modifier
+            .padding(start = 10.dp, bottom = 5.dp)
+            .fillMaxWidth(maxComponentWidth)
     ) {
         CustomIcon(
             modifier = Modifier.offset(y = (5).dp),
@@ -117,14 +122,16 @@ fun CustomTextField(
             TextField(
                 value = userInput,
                 onValueChange = onUserInputChanged,
-                isError = isInputNull,
                 label = {
                     Text(
+                        modifier = Modifier.fillMaxWidth(1f),
                         text = labelText,
                         style = TextStyle(
                             fontFamily = balinookBold,
                             fontSize = 14.sp,
-                            color = Color.Gray
+                            color =
+                                if (!isInputNull) MaterialTheme.colorScheme.secondary
+                                else MaterialTheme.colorScheme.error,
                         )
                     )
                 },
@@ -141,7 +148,6 @@ fun CustomTextField(
                     disabledIndicatorColor = Color.Transparent,
                     errorContainerColor = Color.Transparent,
                     errorIndicatorColor = Color.Transparent
-
                 ),
                 keyboardOptions = KeyboardOptions(
                     capitalization = keyboardCapitalization,
@@ -152,10 +158,12 @@ fun CustomTextField(
             )
             HorizontalDivider(
                 thickness = 2.dp,
-                color = MaterialTheme.colorScheme.secondary,
+                color =
+                    if (!isInputNull) MaterialTheme.colorScheme.secondary
+                    else MaterialTheme.colorScheme.error,
                 modifier = Modifier
                     .padding(top = 0.dp)
-                    .width(250.dp)
+                    .fillMaxWidth(0.9f)
             )
         }
     }

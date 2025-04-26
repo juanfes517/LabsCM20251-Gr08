@@ -31,20 +31,35 @@ class PersonalDataViewModel : ViewModel() {
     }
 
     fun checkUserInputs(navigateToContactData: () -> Unit) {
-        if (userInputName.isEmpty() || userInputLastName.isEmpty()) {
+        if (userInputName.isEmpty()) {
             _uiState.update { currentState ->
                 currentState.copy(
-                    isInputNameNull = true,
+                    isInputNameNull = true
+                )
+            }
+        } else {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isInputNameNull = false
+                )
+            }
+        }
+
+        if(userInputLastName.isEmpty()) {
+            _uiState.update { currentState ->
+                currentState.copy(
                     isInputLastNameNull = true
                 )
             }
         } else {
             _uiState.update { currentState ->
                 currentState.copy(
-                    isInputNameNull = false,
                     isInputLastNameNull = false
                 )
             }
+        }
+
+        if (!userInputName.isEmpty() && !userInputLastName.isEmpty()) {
             printAllFields()
             navigateToContactData()
         }
