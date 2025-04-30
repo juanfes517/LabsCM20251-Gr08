@@ -120,8 +120,8 @@ fun Form(
     var selectedGender by remember { mutableStateOf("Masculino") }
 
     GenderSelection(
-        selectedOption = selectedGender,
-        onOptionSelected = { selectedGender = it }
+        selectedOption = personalDataViewModel.userGender,
+        onOptionSelected = { personalDataViewModel.updateUserGender(it) }
     )
 
     DatePickerFieldToModal()
@@ -144,7 +144,6 @@ fun Form(
         ) {
             Text(text = "Next")
         }
-
     }
 }
 

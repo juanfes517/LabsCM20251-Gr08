@@ -22,12 +22,19 @@ class PersonalDataViewModel : ViewModel() {
     var userInputLastName by mutableStateOf("")
         private set
 
+    var userGender by mutableStateOf("")
+        private set
+
     fun updateUserInputName(nameEntered: String) {
-        userInputName = nameEntered
+        userInputName = nameEntered.trim()
     }
 
     fun updateUserInputLastName(lastNameEntered: String) {
-        userInputLastName = lastNameEntered
+        userInputLastName = lastNameEntered.trim()
+    }
+
+    fun updateUserGender(userGenderEntered: String) {
+        userGender = userGenderEntered
     }
 
     fun checkUserInputs(navigateToContactData: () -> Unit) {
@@ -45,7 +52,7 @@ class PersonalDataViewModel : ViewModel() {
             }
         }
 
-        if(userInputLastName.isEmpty()) {
+        if (userInputLastName.isEmpty()) {
             _uiState.update { currentState ->
                 currentState.copy(
                     isInputLastNameNull = true
@@ -68,5 +75,13 @@ class PersonalDataViewModel : ViewModel() {
     private fun printAllFields() {
         Log.i("PersonalData", "Información Personal: ")
         Log.i("PersonalData", "$userInputName $userInputLastName")
+
+        if (userGender != "") {
+            if (userGender == "Hombre") {
+                Log.i("PersonalData", "Masculino")
+            } else {
+                Log.i("PersonalData", "Femenino")
+            }
+        }
     }
 }
