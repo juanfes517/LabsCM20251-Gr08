@@ -4,7 +4,9 @@ data class PersonalDataUiState (
     val inputName: String = "",
     val inputLastName: String = "",
     val inputGender: String = "",
+    val inputBirthday: Long? = null,
 
     val isInputNameNull: Boolean = false,
     val isInputLastNameNull: Boolean = false,
+    val isInputBirthdayNull: Boolean = false,
 )

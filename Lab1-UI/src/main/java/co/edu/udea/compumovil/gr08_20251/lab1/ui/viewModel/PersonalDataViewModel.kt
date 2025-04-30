@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import android.util.Log
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PersonalDataViewModel : ViewModel() {
 
@@ -25,16 +27,23 @@ class PersonalDataViewModel : ViewModel() {
     var userGender by mutableStateOf("")
         private set
 
+    var userBirthday by mutableStateOf<Long?>(null)
+        private set
+
     fun updateUserInputName(nameEntered: String) {
-        userInputName = nameEntered.trim()
+        userInputName = nameEntered
     }
 
     fun updateUserInputLastName(lastNameEntered: String) {
-        userInputLastName = lastNameEntered.trim()
+        userInputLastName = lastNameEntered
     }
 
     fun updateUserGender(userGenderEntered: String) {
         userGender = userGenderEntered
+    }
+
+    fun updateUserBirthday(userBirthdayEntered: Long?) {
+        userBirthday = userBirthdayEntered
     }
 
     fun checkUserInputs(navigateToContactData: () -> Unit) {
@@ -66,7 +75,21 @@ class PersonalDataViewModel : ViewModel() {
             }
         }
 
-        if (!userInputName.isEmpty() && !userInputLastName.isEmpty()) {
+        if (userBirthday == null) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isInputBirthdayNull = true
+                )
+            }
+        } else {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isInputBirthdayNull = false
+                )
+            }
+        }
+
+        if (!userInputName.isEmpty() && !userInputLastName.isEmpty() && userBirthday != null) {
             printAllFields()
             navigateToContactData()
         }
@@ -83,5 +106,9 @@ class PersonalDataViewModel : ViewModel() {
                 Log.i("PersonalData", "Femenino")
             }
         }
+
+        val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        val formattedDate = formatter.format(userBirthday)
+        Log.i("PersonalData", "Nació el $formattedDate")
     }
 }

@@ -117,14 +117,16 @@ fun Form(
         maxComponentWidth = 0.7f
     )
 
-    var selectedGender by remember { mutableStateOf("Masculino") }
-
     GenderSelection(
         selectedOption = personalDataViewModel.userGender,
         onOptionSelected = { personalDataViewModel.updateUserGender(it) }
     )
 
-    DatePickerFieldToModal()
+    DatePickerFieldToModal(
+        selectedDate = personalDataViewModel.userBirthday,
+        onDateSelected = { personalDataViewModel.updateUserBirthday(it) },
+        isInputBirthdayNull = personalDataUiState.isInputBirthdayNull
+    )
 
     var selectedEducationLevel by remember { mutableStateOf("") }
 
@@ -221,8 +223,12 @@ fun EducationLevelDropdown(
 }
 
 @Composable
-fun DatePickerFieldToModal(modifier: Modifier = Modifier) {
-    var selectedDate by remember { mutableStateOf<Long?>(null) }
+fun DatePickerFieldToModal(
+    modifier: Modifier = Modifier,
+    selectedDate: Long?,
+    onDateSelected: (Long?) -> Unit,
+    isInputBirthdayNull: Boolean
+) {
     var showModal by remember { mutableStateOf(false) }
 
     Row(
@@ -240,7 +246,10 @@ fun DatePickerFieldToModal(modifier: Modifier = Modifier) {
         Text(
             text = "Fecha de cumpleaños: ",
             fontFamily = balinookBold,
-            fontSize = 15.sp
+            fontSize = 15.sp,
+            color =
+                if (isInputBirthdayNull) MaterialTheme.colorScheme.error
+                else MaterialTheme.colorScheme.primary
         )
 
         OutlinedTextField(
@@ -271,8 +280,12 @@ fun DatePickerFieldToModal(modifier: Modifier = Modifier) {
                     }
                 },
             colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                focusedIndicatorColor =
+                    if (isInputBirthdayNull) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor =
+                    if (isInputBirthdayNull) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.primary,
                 errorIndicatorColor = MaterialTheme.colorScheme.primary,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -283,7 +296,7 @@ fun DatePickerFieldToModal(modifier: Modifier = Modifier) {
 
     if (showModal) {
         DatePickerModal(
-            onDateSelected = { selectedDate = it },
+            onDateSelected = { onDateSelected(it) },
             onDismiss = { showModal = false }
         )
     }
