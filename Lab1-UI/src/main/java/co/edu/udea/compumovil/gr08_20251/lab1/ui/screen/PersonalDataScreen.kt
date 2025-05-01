@@ -131,8 +131,8 @@ fun Form(
     var selectedEducationLevel by remember { mutableStateOf("") }
 
     EducationLevelDropdown(
-        selectedOption = selectedEducationLevel,
-        onOptionSelected = { selectedEducationLevel = it }
+        selectedOption = personalDataViewModel.userEducationLevel,
+        onOptionSelected = { personalDataViewModel.updateUserEducationLevel(it) }
     )
 
     Row(

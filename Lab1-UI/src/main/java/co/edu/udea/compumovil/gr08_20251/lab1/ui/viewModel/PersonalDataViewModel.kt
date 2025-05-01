@@ -30,6 +30,9 @@ class PersonalDataViewModel : ViewModel() {
     var userBirthday by mutableStateOf<Long?>(null)
         private set
 
+    var userEducationLevel by mutableStateOf("")
+        private set
+
     fun updateUserInputName(nameEntered: String) {
         userInputName = nameEntered
     }
@@ -46,7 +49,18 @@ class PersonalDataViewModel : ViewModel() {
         userBirthday = userBirthdayEntered
     }
 
+    fun updateUserEducationLevel(userEducationLevelEntered: String) {
+        userEducationLevel = userEducationLevelEntered
+    }
+
     fun checkUserInputs(navigateToContactData: () -> Unit) {
+
+        userInputName = userInputName.trim()
+        userInputName = userInputName.replace(Regex("\\s+"), " ")
+
+        userInputLastName = userInputLastName.trim()
+        userInputLastName = userInputLastName.replace(Regex("\\s+"), " ")
+
         if (userInputName.isEmpty()) {
             _uiState.update { currentState ->
                 currentState.copy(
@@ -96,6 +110,8 @@ class PersonalDataViewModel : ViewModel() {
     }
 
     private fun printAllFields() {
+        Log.i("PersonalData", "------------------------------------------------------")
+
         Log.i("PersonalData", "Información Personal: ")
         Log.i("PersonalData", "$userInputName $userInputLastName")
 
@@ -110,5 +126,11 @@ class PersonalDataViewModel : ViewModel() {
         val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         val formattedDate = formatter.format(userBirthday)
         Log.i("PersonalData", "Nació el $formattedDate")
+
+        if (userEducationLevel != "") {
+            Log.i("PersonalData", userEducationLevel)
+        }
+
+        Log.i("PersonalData", "------------------------------------------------------")
     }
 }

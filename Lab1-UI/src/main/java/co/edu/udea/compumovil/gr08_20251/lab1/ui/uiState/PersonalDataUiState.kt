@@ -5,6 +5,7 @@ data class PersonalDataUiState (
     val inputLastName: String = "",
     val inputGender: String = "",
     val inputBirthday: Long? = null,
+    val inputEducationLevel: String = "",
 
     val isInputNameNull: Boolean = false,
     val isInputLastNameNull: Boolean = false,
