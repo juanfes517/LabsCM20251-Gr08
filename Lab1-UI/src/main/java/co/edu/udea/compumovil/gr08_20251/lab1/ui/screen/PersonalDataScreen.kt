@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -52,6 +53,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import co.edu.udea.compumovil.gr08_20251.lab1.R
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.CustomIcon
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.CustomNextButton
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.CustomTextField
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.Header
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookBold
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookRegular
@@ -82,47 +84,52 @@ fun Form(
 ) {
     val personalDataUiState by personalDataViewModel.uiState.collectAsState()
 
-    CustomTextField(
-        userInput = personalDataViewModel.userInputName,
-        onUserInputChanged = { personalDataViewModel.updateUserInputName(it) },
-        iconId = R.drawable.person,
-        labelText = "Nombre",
-        keyboardCapitalization = KeyboardCapitalization.Sentences,
-        keyboardType = KeyboardType.Text,
-        isInputNull = personalDataUiState.isInputNameNull,
-        maxComponentWidth = 0.8f
-    )
+    Column (
+        verticalArrangement = Arrangement.spacedBy(30.dp),
+        modifier = Modifier.imePadding()
+    ) {
+        CustomTextField(
+            userInput = personalDataViewModel.userInputName,
+            onUserInputChanged = { personalDataViewModel.updateUserInputName(it) },
+            iconId = R.drawable.person,
+            labelText = "Nombre",
+            keyboardCapitalization = KeyboardCapitalization.Sentences,
+            keyboardType = KeyboardType.Text,
+            isInputNull = personalDataUiState.isInputNameNull,
+            maxComponentWidth = 0.8f
+        )
 
-    CustomTextField(
-        userInput = personalDataViewModel.userInputLastName,
-        onUserInputChanged = { personalDataViewModel.updateUserInputLastName(it) },
-        iconId = R.drawable.person_add,
-        labelText = "Apellidos",
-        keyboardCapitalization = KeyboardCapitalization.Sentences,
-        keyboardType = KeyboardType.Text,
-        isInputNull = personalDataUiState.isInputLastNameNull,
-        maxComponentWidth = 0.7f
-    )
+        CustomTextField(
+            userInput = personalDataViewModel.userInputLastName,
+            onUserInputChanged = { personalDataViewModel.updateUserInputLastName(it) },
+            iconId = R.drawable.person_add,
+            labelText = "Apellidos",
+            keyboardCapitalization = KeyboardCapitalization.Sentences,
+            keyboardType = KeyboardType.Text,
+            isInputNull = personalDataUiState.isInputLastNameNull,
+            maxComponentWidth = 0.7f
+        )
 
-    GenderSelection(
-        selectedOption = personalDataViewModel.userGender,
-        onOptionSelected = { personalDataViewModel.updateUserGender(it) }
-    )
+        GenderSelection(
+            selectedOption = personalDataViewModel.userGender,
+            onOptionSelected = { personalDataViewModel.updateUserGender(it) }
+        )
 
-    DatePickerFieldToModal(
-        selectedDate = personalDataViewModel.userBirthday,
-        onDateSelected = { personalDataViewModel.updateUserBirthday(it) },
-        isInputBirthdayNull = personalDataUiState.isInputBirthdayNull
-    )
+        DatePickerFieldToModal(
+            selectedDate = personalDataViewModel.userBirthday,
+            onDateSelected = { personalDataViewModel.updateUserBirthday(it) },
+            isInputBirthdayNull = personalDataUiState.isInputBirthdayNull
+        )
 
-    EducationLevelDropdown(
-        selectedOption = personalDataViewModel.userEducationLevel,
-        onOptionSelected = { personalDataViewModel.updateUserEducationLevel(it) }
-    )
+        EducationLevelDropdown(
+            selectedOption = personalDataViewModel.userEducationLevel,
+            onOptionSelected = { personalDataViewModel.updateUserEducationLevel(it) }
+        )
 
-    CustomNextButton(
-        onClickButton = { personalDataViewModel.checkUserInputs(navigateToContactData) },
-    )
+        CustomNextButton(
+            onClickButton = { personalDataViewModel.checkUserInputs(navigateToContactData) },
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -359,82 +366,6 @@ fun GenderSelection(
                 }
             }
 
-        }
-    }
-}
-
-@Composable
-fun CustomTextField(
-    userInput: String,
-    onUserInputChanged: (String) -> Unit,
-    iconId: Int,
-    labelText: String,
-    keyboardCapitalization: KeyboardCapitalization,
-    keyboardType: KeyboardType,
-    isInputNull: Boolean,
-    maxComponentWidth: Float
-) {
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(start = 10.dp, bottom = 5.dp)
-            .fillMaxWidth(maxComponentWidth)
-    ) {
-        CustomIcon(
-            modifier = Modifier.offset(y = (5).dp),
-            iconId = iconId,
-            iconSize = 40.dp
-        )
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            TextField(
-                value = userInput,
-                onValueChange = onUserInputChanged,
-                label = {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(1f),
-                        text = labelText,
-                        style = TextStyle(
-                            fontFamily = balinookBold,
-                            fontSize = 14.sp,
-                            color =
-                                if (!isInputNull) MaterialTheme.colorScheme.secondary
-                                else MaterialTheme.colorScheme.error,
-                        )
-                    )
-                },
-                textStyle = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = balinookRegular
-                ),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorContainerColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent
-                ),
-                keyboardOptions = KeyboardOptions(
-                    capitalization = keyboardCapitalization,
-                    autoCorrectEnabled = false,
-                    keyboardType = keyboardType,
-                    imeAction = ImeAction.Next,
-                )
-            )
-            HorizontalDivider(
-                thickness = 2.dp,
-                color =
-                    if (!isInputNull) MaterialTheme.colorScheme.secondary
-                    else MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .padding(top = 0.dp)
-                    .fillMaxWidth(0.9f)
-            )
         }
     }
 }
