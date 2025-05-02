@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Labs20251-Gr08</string>
     <string name="personal_information">Información Personal</string>
+    <string name="personal_information_two">Información Personal:</string>
     <string name="name">*Nombres</string>
     <string name="lastname">*Apellidos*</string>
     <string name="sex">Sexo:</string>
     <string name="man">Hombre</string>
     <string name="woman">Mujer</string>
+    <string name="masculine">Masculino</string>
+    <string name="femenine">Femenino</string>
     <string name="birthdate">*Fecha de nacimiento:</string>
     <string name="grade">Grado de escolaridad</string>
     <string name="elementary">Primaria</string>
