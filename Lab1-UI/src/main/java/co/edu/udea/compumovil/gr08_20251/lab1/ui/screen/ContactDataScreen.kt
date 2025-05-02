@@ -76,7 +76,7 @@ fun FormContactData(
             keyboardCapitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Number,
             isInputNull = uiState.isInputPhoneNull,
-            maxComponentWidth = 0.9f
+            modifier = Modifier.fillMaxWidth(0.9f),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -90,7 +90,7 @@ fun FormContactData(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = uiState.isInputEmailNull,
-            maxComponentWidth = 0.9f
+            modifier = Modifier.fillMaxWidth(0.9f),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -104,7 +104,7 @@ fun FormContactData(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = uiState.isInputCountryNull,
-            maxComponentWidth = 0.9f
+            modifier = Modifier.fillMaxWidth(0.9f),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -118,7 +118,7 @@ fun FormContactData(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = false,
-            maxComponentWidth = 0.9f
+            modifier = Modifier.fillMaxWidth(0.9f),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -132,7 +132,7 @@ fun FormContactData(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = false,
-            maxComponentWidth = 0.9f
+            modifier = Modifier.fillMaxWidth(0.9f),
         )
 
         Spacer(modifier = Modifier.height(16.dp))

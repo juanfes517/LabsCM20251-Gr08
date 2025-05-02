@@ -104,14 +104,13 @@ fun CustomTextField(
     keyboardCapitalization: KeyboardCapitalization,
     keyboardType: KeyboardType,
     isInputNull: Boolean,
-    maxComponentWidth: Float
+    modifier: Modifier = Modifier
 ) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .padding(start = 10.dp, bottom = 5.dp)
-            .fillMaxWidth(maxComponentWidth)
     ) {
         CustomIcon(
             modifier = Modifier.offset(y = (5).dp),

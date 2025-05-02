@@ -1,5 +1,7 @@
 package co.edu.udea.compumovil.gr08_20251.lab1.ui.screen
 
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -12,7 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
@@ -42,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -66,27 +71,41 @@ import java.util.Locale
 fun PersonalDataScreen(
     navigateToContactData: () -> Unit,
 ) {
+    val configuration = LocalConfiguration.current
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
         ) {
             Header("Información personal")
-            Form(navigateToContactData)
+
+            when (configuration.orientation) {
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    FormPortrait(navigateToContactData)
+                }
+
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    FormLandscape(navigateToContactData)
+                }
+            }
         }
     }
 }
 
 @Composable
-fun Form(
+fun FormPortrait(
     navigateToContactData: () -> Unit,
     personalDataViewModel: PersonalDataViewModel = viewModel()
 ) {
     val personalDataUiState by personalDataViewModel.uiState.collectAsState()
+    val scrollState = rememberScrollState()
 
-    Column (
+    Column(
         verticalArrangement = Arrangement.spacedBy(30.dp),
-        modifier = Modifier.imePadding()
+        modifier = Modifier
+            .verticalScroll(scrollState)
+            .imePadding()
     ) {
         CustomTextField(
             userInput = personalDataViewModel.userInputName,
@@ -96,7 +115,7 @@ fun Form(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = personalDataUiState.isInputNameNull,
-            maxComponentWidth = 0.8f
+            modifier = Modifier.fillMaxWidth(0.8f)
         )
 
         CustomTextField(
@@ -107,7 +126,7 @@ fun Form(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = personalDataUiState.isInputLastNameNull,
-            maxComponentWidth = 0.7f
+            modifier = Modifier.fillMaxWidth(0.7f)
         )
 
         GenderSelection(
@@ -120,6 +139,83 @@ fun Form(
             onDateSelected = { personalDataViewModel.updateUserBirthday(it) },
             isInputBirthdayNull = personalDataUiState.isInputBirthdayNull
         )
+
+        EducationLevelDropdown(
+            selectedOption = personalDataViewModel.userEducationLevel,
+            onOptionSelected = { personalDataViewModel.updateUserEducationLevel(it) }
+        )
+
+        CustomNextButton(
+            onClickButton = { personalDataViewModel.checkUserInputs(navigateToContactData) },
+        )
+    }
+}
+
+@Composable
+fun FormLandscape(
+    navigateToContactData: () -> Unit,
+    personalDataViewModel: PersonalDataViewModel = viewModel()
+) {
+    val personalDataUiState by personalDataViewModel.uiState.collectAsState()
+    val scrollState = rememberScrollState()
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        modifier = Modifier
+            .verticalScroll(scrollState)
+            .imePadding()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(horizontal = 10.dp)
+        ) {
+            CustomTextField(
+                userInput = personalDataViewModel.userInputName,
+                onUserInputChanged = { personalDataViewModel.updateUserInputName(it) },
+                iconId = R.drawable.person,
+                labelText = "Nombre",
+                keyboardCapitalization = KeyboardCapitalization.Sentences,
+                keyboardType = KeyboardType.Text,
+                isInputNull = personalDataUiState.isInputNameNull,
+                modifier = Modifier.weight(1f)
+            )
+
+            CustomTextField(
+                userInput = personalDataViewModel.userInputLastName,
+                onUserInputChanged = { personalDataViewModel.updateUserInputLastName(it) },
+                iconId = R.drawable.person_add,
+                labelText = "Apellidos",
+                keyboardCapitalization = KeyboardCapitalization.Sentences,
+                keyboardType = KeyboardType.Text,
+                isInputNull = personalDataUiState.isInputLastNameNull,
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(1f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            GenderSelection(
+                selectedOption = personalDataViewModel.userGender,
+                onOptionSelected = { personalDataViewModel.updateUserGender(it) }
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(1f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            DatePickerFieldToModal(
+                selectedDate = personalDataViewModel.userBirthday,
+                onDateSelected = { personalDataViewModel.updateUserBirthday(it) },
+                isInputBirthdayNull = personalDataUiState.isInputBirthdayNull,
+                modifier = Modifier.fillMaxWidth(0.2f)
+            )
+        }
 
         EducationLevelDropdown(
             selectedOption = personalDataViewModel.userEducationLevel,
@@ -216,8 +312,7 @@ fun DatePickerFieldToModal(
 
     Row(
         modifier = Modifier
-            .padding(start = 10.dp, bottom = 5.dp, top = 10.dp)
-            .fillMaxWidth(1f),
+            .padding(start = 10.dp, bottom = 5.dp, top = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -276,7 +371,6 @@ fun DatePickerFieldToModal(
         )
     }
 
-
     if (showModal) {
         DatePickerModal(
             onDateSelected = { onDateSelected(it) },
@@ -297,8 +391,12 @@ fun DatePickerModal(
     onDismiss: () -> Unit
 ) {
     val datePickerState = rememberDatePickerState()
+    val scrollState = rememberScrollState()
 
     DatePickerDialog(
+        modifier = Modifier
+            .padding(15.dp)
+            .verticalScroll(scrollState),
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
@@ -327,8 +425,7 @@ fun GenderSelection(
 
     Row(
         modifier = Modifier
-            .padding(start = 10.dp, bottom = 5.dp, top = 15.dp)
-            .fillMaxWidth(1f),
+            .padding(start = 10.dp, bottom = 5.dp, top = 15.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
