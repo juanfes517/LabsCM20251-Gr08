@@ -3,7 +3,7 @@
     <string name="personal_information">Información Personal</string>
     <string name="personal_information_two">Información Personal:</string>
     <string name="name">*Nombres</string>
-    <string name="lastname">*Apellidos*</string>
+    <string name="lastname">*Apellidos</string>
     <string name="sex">Sexo:</string>
     <string name="man">Hombre</string>
     <string name="woman">Mujer</string>

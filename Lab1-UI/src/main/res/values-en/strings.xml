@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Labs20251-Gr08</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="personal_information_two">Personal Information:</string>
+    <string name="name">*First Name</string>
+    <string name="lastname">*Last Name</string>
+    <string name="sex">Gender:</string>
+    <string name="man">Male</string>
+    <string name="woman">Female</string>
+    <string name="masculine">Masculine</string>
+    <string name="femenine">Feminine</string>
+    <string name="birthdate">*Date of Birth:</string>
+    <string name="grade">Level of Education</string>
+    <string name="elementary">Elementary</string>
+    <string name="secondary">High School</string>
+    <string name="college">University</string>
+    <string name="other">Other</string>
+    <string name="next">Next</string>
+    <string name="cellphone">*Phone</string>
+    <string name="email">*Email</string>
+    <string name="address">Address</string>
+    <string name="country">*Country</string>
+    <string name="city">City</string>
+</resources>
