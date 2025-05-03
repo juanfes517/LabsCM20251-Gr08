@@ -1,6 +1,8 @@
 package co.edu.udea.compumovil.gr08_20251.lab1.ui.screen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -48,25 +50,37 @@ import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookBold
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookRegular
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.viewModel.ContactDataViewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.platform.LocalConfiguration
 
 
 @Composable
 fun ContactDataScreen(
     navigateToReset: () -> Unit,
 ) {
+    val configuration = LocalConfiguration.current
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
         ) {
             Header("Información de contacto")
-            FormContactData(navigateToReset)
+
+            when (configuration.orientation) {
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    FormContactDataPortrait(navigateToReset)
+                }
+
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    FormContactDataLandscape(navigateToReset)
+                }
+            }
         }
     }
 }
 
 @Composable
-fun FormContactData(
+fun FormContactDataPortrait(
     navigateToReset: () -> Unit,
     viewModel: ContactDataViewModel = viewModel()
 ) {
@@ -80,7 +94,8 @@ fun FormContactData(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         // Teléfono
         CustomTextField(
@@ -142,6 +157,114 @@ fun FormContactData(
             keyboardType = KeyboardType.Text,
             isInputNull = false,
             modifier = Modifier.fillMaxWidth(0.9f),
+        )
+
+        CustomNextButton(
+            onClickButton = { viewModel.checkUserInputs(navigateToReset) },
+        )
+    }
+}
+
+@Composable
+fun FormContactDataLandscape(
+    navigateToReset: () -> Unit,
+    viewModel: ContactDataViewModel = viewModel()
+) {
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    val countryNames by viewModel.countryNames.collectAsState()
+    val cityNames by viewModel.cityNames.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(horizontal = 10.dp)
+        ) {
+            // Teléfono
+            CustomTextField(
+                userInput = viewModel.userInputPhone,
+                onUserInputChanged = { viewModel.updateUserInputPhone(it) },
+                iconId = R.drawable.call,
+                labelText = "Teléfono",
+                keyboardCapitalization = KeyboardCapitalization.None,
+                keyboardType = KeyboardType.Number,
+                isInputNull = uiState.isInputPhoneNull,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 10.dp),
+            )
+
+            // Email
+            CustomTextField(
+                userInput = viewModel.userInputEmail,
+                onUserInputChanged = { viewModel.updateUserInputEmail(it) },
+                iconId = R.drawable.mail,
+                labelText = "Correo",
+                keyboardCapitalization = KeyboardCapitalization.Sentences,
+                keyboardType = KeyboardType.Text,
+                isInputNull = uiState.isInputEmailNull,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 10.dp),
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(horizontal = 10.dp)
+        ) {
+            // País (Autocomplete)
+            AutoCompleteCustomTextField(
+                userInput = viewModel.userCountry,
+                onUserInputChanged = { viewModel.updateUserCountry(it) },
+                iconId = R.drawable.globe_location_pin,
+                labelText = "País",
+                keyboardCapitalization = KeyboardCapitalization.Sentences,
+                keyboardType = KeyboardType.Text,
+                isInputNull = uiState.isInputCountryNull,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 10.dp),
+                list = countryNames
+            )
+
+            // Ciudad (Autocomplete)
+            AutoCompleteCustomTextField(
+                userInput = viewModel.userCity,
+                onUserInputChanged = { viewModel.updateUserCity(it) },
+                iconId = R.drawable.location_city,
+                labelText = "Ciudad",
+                keyboardCapitalization = KeyboardCapitalization.Sentences,
+                keyboardType = KeyboardType.Text,
+                isInputNull = false,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 10.dp),
+                list = cityNames
+            )
+        }
+
+        // Dirección
+        CustomTextField(
+            userInput = viewModel.userAddress,
+            onUserInputChanged = { viewModel.updateUserAddress(it) },
+            iconId = R.drawable.home_pin,
+            labelText = "Dirección",
+            keyboardCapitalization = KeyboardCapitalization.Sentences,
+            keyboardType = KeyboardType.Text,
+            isInputNull = false,
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .padding(horizontal = 18.dp),
         )
 
         CustomNextButton(
