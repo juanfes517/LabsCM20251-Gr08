@@ -107,7 +107,8 @@ fun CustomTextField(
     keyboardCapitalization: KeyboardCapitalization,
     keyboardType: KeyboardType,
     isInputNull: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imeAction: ImeAction
 ) {
 
     Row(
@@ -157,7 +158,7 @@ fun CustomTextField(
                     capitalization = keyboardCapitalization,
                     autoCorrectEnabled = false,
                     keyboardType = keyboardType,
-                    imeAction = ImeAction.Next,
+                    imeAction = imeAction
                 )
             )
             HorizontalDivider(

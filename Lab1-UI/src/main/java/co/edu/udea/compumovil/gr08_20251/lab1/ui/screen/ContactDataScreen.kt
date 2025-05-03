@@ -108,6 +108,7 @@ fun FormContactDataPortrait(
             keyboardType = KeyboardType.Number,
             isInputNull = uiState.isInputPhoneNull,
             modifier = Modifier.fillMaxWidth(0.9f),
+            imeAction = ImeAction.Next,
         )
 
         // Email
@@ -120,6 +121,7 @@ fun FormContactDataPortrait(
             keyboardType = KeyboardType.Text,
             isInputNull = uiState.isInputEmailNull,
             modifier = Modifier.fillMaxWidth(0.9f),
+            imeAction = ImeAction.Next,
         )
 
         // País (Autocomplete)
@@ -132,7 +134,8 @@ fun FormContactDataPortrait(
             keyboardType = KeyboardType.Text,
             isInputNull = uiState.isInputCountryNull,
             modifier = Modifier.fillMaxWidth(0.9f),
-            list = countryNames
+            list = countryNames,
+            imeAction = ImeAction.Next,
         )
 
         // Ciudad (Autocomplete)
@@ -145,7 +148,8 @@ fun FormContactDataPortrait(
             keyboardType = KeyboardType.Text,
             isInputNull = false,
             modifier = Modifier.fillMaxWidth(0.9f),
-            list = cityNames
+            list = cityNames,
+            imeAction = ImeAction.Next,
         )
 
         // Dirección
@@ -158,6 +162,7 @@ fun FormContactDataPortrait(
             keyboardType = KeyboardType.Text,
             isInputNull = false,
             modifier = Modifier.fillMaxWidth(0.9f),
+            imeAction = ImeAction.Done,
         )
 
         CustomNextButton(
@@ -201,6 +206,7 @@ fun FormContactDataLandscape(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 10.dp),
+                imeAction = ImeAction.Next,
             )
 
             // Email
@@ -215,6 +221,7 @@ fun FormContactDataLandscape(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 10.dp),
+                imeAction = ImeAction.Next,
             )
         }
 
@@ -235,7 +242,8 @@ fun FormContactDataLandscape(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 10.dp),
-                list = countryNames
+                list = countryNames,
+                imeAction = ImeAction.Next,
             )
 
             // Ciudad (Autocomplete)
@@ -250,7 +258,8 @@ fun FormContactDataLandscape(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 10.dp),
-                list = cityNames
+                list = cityNames,
+                imeAction = ImeAction.Next,
             )
         }
 
@@ -266,6 +275,7 @@ fun FormContactDataLandscape(
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .padding(horizontal = 18.dp),
+            imeAction = ImeAction.Done,
         )
 
         CustomNextButton(
@@ -285,7 +295,8 @@ fun AutoCompleteCustomTextField(
     keyboardType: KeyboardType,
     isInputNull: Boolean,
     modifier: Modifier = Modifier,
-    list: List<String>
+    list: List<String>,
+    imeAction: ImeAction
 ) {
 
     var expanded by remember { mutableStateOf(false) }
@@ -352,7 +363,7 @@ fun AutoCompleteCustomTextField(
                         capitalization = keyboardCapitalization,
                         autoCorrectEnabled = false,
                         keyboardType = keyboardType,
-                        imeAction = ImeAction.Next,
+                        imeAction = imeAction,
                     )
                 )
 

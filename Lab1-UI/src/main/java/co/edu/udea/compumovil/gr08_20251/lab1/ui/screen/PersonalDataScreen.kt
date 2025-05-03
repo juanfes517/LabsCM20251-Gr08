@@ -118,7 +118,8 @@ fun FormPortrait(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = personalDataUiState.isInputNameNull,
-            modifier = Modifier.fillMaxWidth(0.8f)
+            modifier = Modifier.fillMaxWidth(0.8f),
+            imeAction = ImeAction.Next,
         )
 
         CustomTextField(
@@ -129,7 +130,8 @@ fun FormPortrait(
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = personalDataUiState.isInputLastNameNull,
-            modifier = Modifier.fillMaxWidth(0.7f)
+            modifier = Modifier.fillMaxWidth(0.7f),
+            imeAction = ImeAction.Next,
         )
 
         GenderSelection(
@@ -182,7 +184,8 @@ fun FormLandscape(
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = personalDataUiState.isInputNameNull,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                imeAction = ImeAction.Next,
             )
 
             CustomTextField(
@@ -193,7 +196,8 @@ fun FormLandscape(
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = personalDataUiState.isInputLastNameNull,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                imeAction = ImeAction.Next,
             )
         }
 
