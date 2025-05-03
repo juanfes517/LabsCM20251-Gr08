@@ -11,12 +11,48 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import android.util.Log
+import androidx.lifecycle.viewModelScope
+import co.edu.udea.compumovil.gr08_20251.lab1.ui.api.RetrofitInstance
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class ContactDataViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(ContactDataUiState())
     val uiState: StateFlow<ContactDataUiState> = _uiState.asStateFlow()
+
+    private val _countryNames = MutableStateFlow<List<String>>(emptyList())
+    val countryNames: StateFlow<List<String>> = _countryNames
+
+    private val _cityNames = MutableStateFlow<List<String>>(emptyList())
+    val cityNames: StateFlow<List<String>> = _cityNames
+
+    init {
+        fetchCountries()
+        fetchCities()
+    }
+
+    private fun fetchCountries() {
+        viewModelScope.launch {
+            try {
+                val countries = RetrofitInstance.apiCounty.getCountries()
+                _countryNames.value = countries.map { it.name.common }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun fetchCities() {
+        viewModelScope.launch {
+            try {
+                val cities = RetrofitInstance.apiCity.getCities()
+                _cityNames.value = cities.map { it.name }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
     var userInputPhone by mutableStateOf("")
         private set
