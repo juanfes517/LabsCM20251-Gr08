@@ -51,6 +51,7 @@ import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookRegular
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.viewModel.ContactDataViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 
 
 @Composable
@@ -64,7 +65,7 @@ fun ContactDataScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
         ) {
-            Header("Información de contacto")
+            Header(stringResource(R.string.contact_information))
 
             when (configuration.orientation) {
                 Configuration.ORIENTATION_PORTRAIT -> {
@@ -102,7 +103,7 @@ fun FormContactDataPortrait(
             userInput = viewModel.userInputPhone,
             onUserInputChanged = { viewModel.updateUserInputPhone(it) },
             iconId = R.drawable.call,
-            labelText = "Teléfono",
+            labelText = stringResource(R.string.cellphone),
             keyboardCapitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Number,
             isInputNull = uiState.isInputPhoneNull,
@@ -114,7 +115,7 @@ fun FormContactDataPortrait(
             userInput = viewModel.userInputEmail,
             onUserInputChanged = { viewModel.updateUserInputEmail(it) },
             iconId = R.drawable.mail,
-            labelText = "Correo",
+            labelText = stringResource(R.string.email),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = uiState.isInputEmailNull,
@@ -126,7 +127,7 @@ fun FormContactDataPortrait(
             userInput = viewModel.userCountry,
             onUserInputChanged = { viewModel.updateUserCountry(it) },
             iconId = R.drawable.globe_location_pin,
-            labelText = "País",
+            labelText = stringResource(R.string.country),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = uiState.isInputCountryNull,
@@ -139,7 +140,7 @@ fun FormContactDataPortrait(
             userInput = viewModel.userCity,
             onUserInputChanged = { viewModel.updateUserCity(it) },
             iconId = R.drawable.location_city,
-            labelText = "Ciudad",
+            labelText = stringResource(R.string.city),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = false,
@@ -152,7 +153,7 @@ fun FormContactDataPortrait(
             userInput = viewModel.userAddress,
             onUserInputChanged = { viewModel.updateUserAddress(it) },
             iconId = R.drawable.home_pin,
-            labelText = "Dirección",
+            labelText = stringResource(R.string.address),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = false,
@@ -193,7 +194,7 @@ fun FormContactDataLandscape(
                 userInput = viewModel.userInputPhone,
                 onUserInputChanged = { viewModel.updateUserInputPhone(it) },
                 iconId = R.drawable.call,
-                labelText = "Teléfono",
+                labelText = stringResource(R.string.cellphone),
                 keyboardCapitalization = KeyboardCapitalization.None,
                 keyboardType = KeyboardType.Number,
                 isInputNull = uiState.isInputPhoneNull,
@@ -207,7 +208,7 @@ fun FormContactDataLandscape(
                 userInput = viewModel.userInputEmail,
                 onUserInputChanged = { viewModel.updateUserInputEmail(it) },
                 iconId = R.drawable.mail,
-                labelText = "Correo",
+                labelText = stringResource(R.string.email),
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = uiState.isInputEmailNull,
@@ -227,7 +228,7 @@ fun FormContactDataLandscape(
                 userInput = viewModel.userCountry,
                 onUserInputChanged = { viewModel.updateUserCountry(it) },
                 iconId = R.drawable.globe_location_pin,
-                labelText = "País",
+                labelText = stringResource(R.string.country),
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = uiState.isInputCountryNull,
@@ -242,7 +243,7 @@ fun FormContactDataLandscape(
                 userInput = viewModel.userCity,
                 onUserInputChanged = { viewModel.updateUserCity(it) },
                 iconId = R.drawable.location_city,
-                labelText = "Ciudad",
+                labelText = stringResource(R.string.city),
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = false,
@@ -258,7 +259,7 @@ fun FormContactDataLandscape(
             userInput = viewModel.userAddress,
             onUserInputChanged = { viewModel.updateUserAddress(it) },
             iconId = R.drawable.home_pin,
-            labelText = "Dirección",
+            labelText = stringResource(R.string.address),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = false,

@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -80,7 +81,7 @@ fun PersonalDataScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
         ) {
-            Header("Información personal")
+            Header(stringResource(R.string.personal_information))
 
             when (configuration.orientation) {
                 Configuration.ORIENTATION_PORTRAIT -> {
@@ -113,7 +114,7 @@ fun FormPortrait(
             userInput = personalDataViewModel.userInputName,
             onUserInputChanged = { personalDataViewModel.updateUserInputName(it) },
             iconId = R.drawable.person,
-            labelText = "Nombre",
+            labelText = stringResource(R.string.name),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = personalDataUiState.isInputNameNull,
@@ -124,7 +125,7 @@ fun FormPortrait(
             userInput = personalDataViewModel.userInputLastName,
             onUserInputChanged = { personalDataViewModel.updateUserInputLastName(it) },
             iconId = R.drawable.person_add,
-            labelText = "Apellidos",
+            labelText = stringResource(R.string.lastname),
             keyboardCapitalization = KeyboardCapitalization.Sentences,
             keyboardType = KeyboardType.Text,
             isInputNull = personalDataUiState.isInputLastNameNull,
@@ -177,7 +178,7 @@ fun FormLandscape(
                 userInput = personalDataViewModel.userInputName,
                 onUserInputChanged = { personalDataViewModel.updateUserInputName(it) },
                 iconId = R.drawable.person,
-                labelText = "Nombre",
+                labelText = stringResource(R.string.name),
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = personalDataUiState.isInputNameNull,
@@ -188,7 +189,7 @@ fun FormLandscape(
                 userInput = personalDataViewModel.userInputLastName,
                 onUserInputChanged = { personalDataViewModel.updateUserInputLastName(it) },
                 iconId = R.drawable.person_add,
-                labelText = "Apellidos",
+                labelText = stringResource(R.string.lastname),
                 keyboardCapitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Text,
                 isInputNull = personalDataUiState.isInputLastNameNull,
@@ -246,7 +247,12 @@ fun EducationLevelDropdown(
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val options = listOf("Primaria", "Secundaria", "Universidad", "Otro")
+    val options = listOf(
+        stringResource(R.string.elementary),
+        stringResource(R.string.secondary),
+        stringResource(R.string.college),
+        stringResource(R.string.other))
+
     var expanded by remember { mutableStateOf(false) }
 
     Row(
@@ -270,7 +276,7 @@ fun EducationLevelDropdown(
                 readOnly = true,
                 label = {
                     Text(
-                        text = "Grado de escolaridad",
+                        text = stringResource(R.string.grade),
                         fontFamily = balinookBold,
                         color = Color.Gray
                     )
@@ -333,7 +339,7 @@ fun DatePickerFieldToModal(
         )
 
         Text(
-            text = "Fecha de cumpleaños: ",
+            text = stringResource(R.string.birthdate),
             fontFamily = balinookBold,
             fontSize = 15.sp,
             color =
@@ -414,12 +420,12 @@ fun DatePickerModal(
                 onDateSelected(datePickerState.selectedDateMillis)
                 onDismiss()
             }) {
-                Text("OK")
+                Text(stringResource(R.string.ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }
     ) {
@@ -432,7 +438,7 @@ fun GenderSelection(
     selectedOption: String,
     onOptionSelected: (String) -> Unit
 ) {
-    val options = listOf("Hombre", "Mujer")
+    val options = listOf(stringResource(R.string.man), stringResource(R.string.woman))
 
     Row(
         modifier = Modifier
@@ -449,7 +455,7 @@ fun GenderSelection(
                 iconSize = 40.dp
             )
             Text(
-                text = "Sexo:",
+                text = stringResource(R.string.sex),
                 fontFamily = balinookBold,
                 fontSize = 17.sp
             )

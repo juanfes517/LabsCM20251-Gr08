@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Labs20251-Gr08</string>
     <string name="personal_information">Información Personal</string>
+    <string name="contact_information">Información de contacto</string>
     <string name="personal_information_two">Información Personal:</string>
+    <string name="contact_information_two">Información de contacto:</string>
     <string name="name">*Nombres</string>
     <string name="lastname">*Apellidos</string>
     <string name="sex">Sexo:</string>
@@ -21,5 +23,9 @@
     <string name="address">Dirección</string>
     <string name="country">*País</string>
     <string name="city">Ciudad</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reiniciar</string>
+    <string name="thanks">Gracias por tu información!!</string>
 
 </resources>

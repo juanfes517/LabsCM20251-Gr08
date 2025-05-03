@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.edu.udea.compumovil.gr08_20251.lab1.R
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookBold
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookRegular
 
@@ -87,7 +89,7 @@ fun CustomNextButton(
             modifier = modifier.fillMaxWidth(0.4f)
         ) {
             Text(
-                text = "Siguiente",
+                text = stringResource(R.string.next),
                 fontFamily = balinookBold,
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.primary
