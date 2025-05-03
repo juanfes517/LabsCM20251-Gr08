@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -63,6 +64,7 @@ import co.edu.udea.compumovil.gr08_20251.lab1.ui.common.Header
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookBold
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.theme.balinookRegular
 import co.edu.udea.compumovil.gr08_20251.lab1.ui.viewModel.PersonalDataViewModel
+import java.nio.file.WatchEvent
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -160,9 +162,10 @@ fun FormLandscape(
     val scrollState = rememberScrollState()
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(15.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier
             .verticalScroll(scrollState)
+            .padding(15.dp)
             .imePadding()
     ) {
         Row(
@@ -219,12 +222,20 @@ fun FormLandscape(
 
         EducationLevelDropdown(
             selectedOption = personalDataViewModel.userEducationLevel,
-            onOptionSelected = { personalDataViewModel.updateUserEducationLevel(it) }
+            onOptionSelected = { personalDataViewModel.updateUserEducationLevel(it) },
+            modifier = Modifier.fillMaxWidth(0.5f)
         )
 
-        CustomNextButton(
-            onClickButton = { personalDataViewModel.checkUserInputs(navigateToContactData) },
-        )
+        Row (
+            modifier = Modifier.fillMaxWidth(1f),
+            horizontalArrangement = Arrangement.End
+
+        ) {
+            CustomNextButton(
+                onClickButton = { personalDataViewModel.checkUserInputs(navigateToContactData) },
+                modifier = Modifier.width(250.dp)
+            )
+        }
     }
 }
 
@@ -232,15 +243,15 @@ fun FormLandscape(
 @Composable
 fun EducationLevelDropdown(
     selectedOption: String,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val options = listOf("Primaria", "Secundaria", "Universidad", "Otro")
     var expanded by remember { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier
-            .padding(start = 10.dp, bottom = 5.dp, top = 10.dp)
-            .fillMaxWidth(1f),
+        modifier = modifier
+            .padding(start = 10.dp, bottom = 5.dp, top = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {

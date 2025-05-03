@@ -68,10 +68,11 @@ fun CustomIcon(modifier: Modifier = Modifier, iconId: Int, iconSize: Dp) {
 
 @Composable
 fun CustomNextButton(
-    onClickButton: () -> Unit
+    onClickButton: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 30.dp, end = 10.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.End
@@ -83,7 +84,7 @@ fun CustomNextButton(
             colors = ButtonDefaults.buttonColors(
                 containerColor  = Color.Transparent,
             ),
-            modifier = Modifier.fillMaxWidth(0.4f)
+            modifier = modifier.fillMaxWidth(0.4f)
         ) {
             Text(
                 text = "Siguiente",
