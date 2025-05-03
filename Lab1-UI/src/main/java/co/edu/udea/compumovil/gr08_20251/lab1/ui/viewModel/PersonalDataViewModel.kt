@@ -116,7 +116,7 @@ class PersonalDataViewModel : ViewModel() {
         Log.i("PersonalData", "$userInputName $userInputLastName")
 
         if (userGender != "") {
-            if (userGender == "Hombre") {
+            if (userGender == "Hombre" || userGender == "Male") {
                 Log.i("PersonalData", "Masculino")
             } else {
                 Log.i("PersonalData", "Femenino")

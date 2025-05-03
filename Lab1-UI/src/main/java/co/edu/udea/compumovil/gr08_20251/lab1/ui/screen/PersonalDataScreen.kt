@@ -297,7 +297,10 @@ fun EducationLevelDropdown(
                 ),
                 modifier = Modifier
                     .menuAnchor(type = MenuAnchorType.PrimaryNotEditable, enabled = true)
-                    .fillMaxWidth(0.7f)
+                    .fillMaxWidth(0.7f),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
             )
             ExposedDropdownMenu(
                 expanded = expanded,
@@ -388,6 +391,9 @@ fun DatePickerFieldToModal(
                 errorIndicatorColor = MaterialTheme.colorScheme.primary,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
+            ),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
             )
         )
     }

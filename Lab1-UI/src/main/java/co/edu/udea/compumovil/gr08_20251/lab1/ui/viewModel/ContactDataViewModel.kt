@@ -132,17 +132,27 @@ class ContactDataViewModel : ViewModel() {
             updateInputState(currentState, userCountry.isEmpty(), InputFieldType.COUNTRY)
         }
 
-        if (!(_uiState.value.isInputPhoneNull) && !(_uiState.value.isInputEmailNull) && !(_uiState.value.isInputCountryNull)){
+        if (!(_uiState.value.isInputPhoneNull) && !(_uiState.value.isInputEmailNull) && !(_uiState.value.isInputCountryNull)) {
             printAllFields()
             navigateToContactData()
         }
     }
 
-    private fun printAllFields(){
-        Log.d("ContactDataViewModel", "phone: $userInputPhone")
-        Log.d("ContactDataViewModel", "email: $userInputEmail")
-        Log.d("ContactDataViewModel", "country: $userCountry")
-        Log.d("ContactDataViewModel", "city: $userCity")
-        Log.d("ContactDataViewModel", "address: $userAddress")
+    private fun printAllFields() {
+        Log.i("ContactDataViewModel", "------------------------------------------------------")
+
+        Log.i("ContactDataViewModel", "Información de contacto: ")
+
+        Log.i("ContactDataViewModel", "Teléfono: $userInputPhone")
+        if (userAddress != "") {
+            Log.i("ContactDataViewModel", "Dirección: $userAddress")
+        }
+        Log.i("ContactDataViewModel", "Email: $userInputEmail")
+        Log.i("ContactDataViewModel", "País: $userCountry")
+        if (userCity != "") {
+            Log.i("ContactDataViewModel", "Ciudad: $userCity")
+        }
+
+        Log.i("ContactDataViewModel", "------------------------------------------------------")
     }
 }
